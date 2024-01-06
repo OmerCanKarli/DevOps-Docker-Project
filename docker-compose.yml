@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+    database:
+        image: mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: random1234
+            MYSQL_DATABASE: bookstore_db
+            MYSQL_USER: clarusway
+            MYSQL_PASSWORD: Clarusway_1
+        networks:
+          - mynet
+        volumes:
+          - dbvolume:/var/lib/mysql    
+    bookapp:
+        image: omercan99/bookstore:2.0
+        restart: always
+        depends_on:
+            - database
+        ports:
+            - "80:80"
+        networks:
+            - mynet
+networks:
+    mynet:
+        driver: bridge
+volumes:
+    dbvolume:      
